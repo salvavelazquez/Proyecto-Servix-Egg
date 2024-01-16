@@ -1,0 +1,14 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {
+            "context": "th"
+        },
+        "redirigir(this)\"": {
+            "context": "select"
+        },
+        "th:each": {
+            "context": "tbody"
+        }
+    }
+}

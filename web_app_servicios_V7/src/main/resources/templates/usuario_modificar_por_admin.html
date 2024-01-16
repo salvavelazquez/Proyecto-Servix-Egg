@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Registro Cliente</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/usuario_formulario.css">
+
+    </head>
+
+    <body id="main_body">
+        
+        <div th:if="${usuario != null and usuario.proveedor != null and usuario.proveedor.id != null}" class="container">
+
+            <form  id="form_48915" class="appnitro" method="POST" th:action="@{/admin/modificar_proveedor/__${usuario.id}__}">
+                <div class="form_description">
+                    <h2>MODIFICAR PROVEEDOR</h2>
+
+                    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                        <div class="card-body">
+                            <h5 class="card-title">ERROR 👎</h5>
+                            <p class="card-text" th:text="${error}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                        <div class="card-body">
+                            <h5 class="card-title">EXITO!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <ul>
+
+                    <li id="li_1">
+                        <label for="caracteristica">Nombre y Apellido:</label>
+                        <span>
+                            <input id="element_1" name="nombre" class="element text" maxlength="255" size="8" th:value="${usuario.nombre}" placeholder="Nombre" required />
+                        </span>
+                    </li>
+                    
+                    <li id="li_5">
+                        <label for="caracteristica">Teléfono:</label>
+                        <div class="phone-input">
+                            <input type="text" id="caracteristica" name="telefono" th:value="${usuario.telefono}" placeholder="Telefono sin el 0, 15 o -" required />
+                        </div>
+
+                    </li>
+                    <label for="caracteristica">Servicio:</label>
+                    <select id="opciones" name="tipo_servicio">
+                        <option style="color: gray" value="opcion1">Servicio que ofrece</option>
+                        <option value="Plomero" th:selected="${usuario.proveedor.tipo_servicio == 'Plomero'}" >Plomería</option>
+                        <option value="Gasista" th:selected="${usuario.proveedor.tipo_servicio == 'Gasista'}" >Gasista</option>
+                        <option value="Carpintero" th:selected="${usuario.proveedor.tipo_servicio == 'Carpintero'}" >Carpintería</option>
+                        <option value="Electricista" th:selected="${usuario.proveedor.tipo_servicio == 'Electricista'}" >Electricista</option>
+                        <option value="Albañil" th:selected="${usuario.proveedor.tipo_servicio == 'Albañil'}">Albañilería</option>
+                        <option value="Cerrajero" th:selected="${usuario.proveedor.tipo_servicio == 'Cerrajero'}">Cerrajería</option>
+
+
+
+
+                    </select>
+
+                    <li id="li_5">
+                        <label for="caracteristica">Descripción:</label>
+                        <div class="phone-input">
+                            <input type="text" id="caracteristica" name="descripcion" th:value="${usuario.proveedor.descripcion}" placeholder="Descripcion" required />
+                        </div>
+
+                    </li>
+
+
+<!--                    <li id="li_6">
+                        <label class="description" for="element_6">Cargar Imagen </label>
+                        <div>
+                            <input id="element_6" name="archivo" class="element file" type="file" />
+                        </div>
+                    </li>
+<div>
+    <img class="review-image" th:src="@{/imagen/foto/__${usuario.id}__}" alt="Foto proveedor">
+</div>-->
+
+                    <li class="buttons">
+                        <input type="hidden" name="form_id" value="48915" />
+                        <input id="saveForm" class="button_text" type="submit" name="Submit" value="Aceptar" onclick="confirmarModificacion()" />
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+       <div th:if="${usuario != null and usuario.cliente != null and usuario.cliente.id != null}" class="container">
+
+            <form id="form_48915" class="appnitro" enctype="multipart/form-data" method="POST" th:action="@{/admin/modificar_cliente/__${usuario.id}__}">      
+                <div class="form_description">
+                    <h2>MODIFICAR USUARIO</h2>
+
+                    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                        <div class="card-body">
+                            <h5 class="card-title">ERROR 👎</h5>
+                            <p class="card-text" th:text="${error}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                        <div class="card-body">
+                            <h5 class="card-title">EXITO!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <ul>
+
+                    <li id="li_1">
+                        <label for="caracteristica">Nombre y Apellido:</label>
+                        <span>
+                            <input id="element_1" name="nombre" class="element text" maxlength="255" size="8" th:value="${usuario.nombre}" placeholder="Nombre" required />
+                        </span>
+                    </li>
+                    <!--                    <li id="li_2">
+                                            <div>
+                                                <input id="element_2" name="password" class="element text large" value="" type="password" placeholder="Contraseña" required/>
+                                            </div>
+                                            <div>
+                                                <input id="element_2" name="password2" class="element text large" value="" type="password" placeholder="Repetir Contraseña" required/>
+                                            </div>
+                                        </li>-->
+                    <li id="li_3">
+                        <label for="caracteristica">Dirección:</label>
+                        <div>
+                            <input id="element_3" name="direccion" class="element text large" th:value="${usuario.cliente.direccion}" type="text" placeholder="Domicilio" required/>
+                        </div>
+                    </li>
+
+                    <li id="li_3">
+                        <label for="caracteristica">Barrio:</label>
+                        <select id="opciones" name="barrio">
+                            <option style="color: gray" value="opcion1">Barrio</option>
+                            <option value="Barrio Norte" th:selected="${usuario.cliente.barrio == 'Barrio Norte'}">Barrio Norte</option>
+                            <option value="Barrio Este" th:selected="${usuario.cliente.barrio == 'Barrio Este'}">Barrio Este</option>
+                            <option value="Barrio Sur" th:selected="${usuario.cliente.barrio == 'Barrio Sur'}">Barrio Sur</option>
+                        </select>
+                    </li>
+
+                    <!--                    <li id="li_4">
+                                            <div>
+                                                <input id="element_4" name="email" class="element text large" th:value="${session.usuariosession.email}" type="text" placeholder="Correo: cliente@gmail.com" required/>
+                                            </div>
+                                        </li>-->
+                    <li id="li_5">
+                        <label for="caracteristica">Teléfono:</label>
+                        <div class="phone-input">
+                            <input type="text" id="caracteristica" name="telefono" th:value="${usuario.telefono}" placeholder="Telefono sin el 0, 15 o -" required />
+                        </div>
+                    </li>
+<!--                    <li id="li_6">
+                        <label class="description" for="element_6">Cargar Imagen </label>
+                        <div>
+                            <input th:src="@{/imagen/foto/__${usuario.id}__}" id="element_6" name="archivo" class="element file" type="file"/>
+                        </div>
+                    </li>-->
+<!--<div>
+    <img class="review-image" th:src="@{/imagen/foto/__${usuario.id}__}" alt="Foto proveedor">
+</div>-->
+
+
+                    <li class="buttons">
+                        <input type="hidden" name="form_id" value="48915" />
+                        <input id="saveForm" class="button_text" type="submit" name="Submit" value="Aceptar" onclick="confirmarModificacion()" />
+                    </li>
+                </ul>
+            </form>
+        </div>
+        
+    <div class="containeradmin">   
+        <a href="/inicio">
+            <img class="logoadimn" src="../img/Logo.PNG" alt="Logo">
+        </a>
+
+    </div>
+
+
+
+</body>
+    <script th:inline="javascript">
+        function confirmarModificacion() {
+            var confirmacion = confirm("¿Realmente quieres modificar los datos?");
+            if (confirmacion) {
+                document.getElementById('form_48915').submit();
+            } else {
+                event.preventDefault(); // Evita el envío del formulario
+                window.location.href = 'http://localhost:8080/inicio';
+            }
+        }
+    </script>
+</html>

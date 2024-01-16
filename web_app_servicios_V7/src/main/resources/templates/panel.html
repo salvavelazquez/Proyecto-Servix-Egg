@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ServiX</title>
+        <link rel="stylesheet" href="../css/inicio.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            
+        </style>    
+    </head>
+
+    <body>
+        <div class="cuerpo">
+            <nav id="myNav">
+                <a href="/inicio" class="logoenlace"><img src="../img/Logo1.png" alt="Logo" class="logo"></a>
+                <ul>
+                  
+                    <h3 class="saludo" th:if="${session.usuariosession != null}"><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}+'(ADMIN)'"></span></h3>
+                    <li>
+                        <a href="#" class="userenlace" >
+                        <img src="../img/notify1.png" alt="User" class="user-notify">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="">Notificaciones</a>
+                            <hr/>
+                            <p style="color:black;margin-left: 40px;">Nuevo Mensaje</p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <a th:if="${session.usuariosession.imagen != null}" href="#" class="userperfil">
+                            <img class="user-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="javascript:void(0);" onclick="mostrarRegistroPanel()"> Perfil</a>
+                            <a  href="/cliente/todos_clientes"> Clientes</a>
+                            <a  href="/proveedor/todos_proveedores"> Proveedores</a>
+                            <a href="/logout"> Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="div-transparente">
+            <!-- Contenedor Perfil-->
+            <div id="container1" class="container1">
+                <h2>PERFIL</h2>
+                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}">
+                        <div class="div-perfil-image">
+                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
+                        </div>
+                        <div class="div-data">
+                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                            <p class="telefono" th:text="'Telefono: ' + ${session.usuariosession.telefono}"></p>
+                            <p class="barrio" th:text="'Barrio: ' + ${session.usuariosession.cliente.barrio}"></p>
+                            <p class="direccion" th:text="'Direccion: ' + ${session.usuariosession.cliente.direccion}"></p>
+                        </div>   
+                    </div>
+                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+                        <div class="div-perfil-image" >
+                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
+                        </div>
+                        <div class="div-data">
+                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                            <p class="telefono" th:text="'Teléfono: ' + ${session.usuariosession.telefono}"></p>
+                            <p class="barrio" th:text="'Servicio que ofrece: ' + ${session.usuariosession.proveedor.tipo_servicio}"></p>
+                            <p class="direccion" th:text="'Descripción: ' + ${session.usuariosession.proveedor.descripcion}"></p>
+                        </div>
+                    </div>
+                <div class="div-botones">
+                    
+                    <button onclick="confirmarEliminacion(event)" th:href="@{/cliente/eliminar_cliente/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</button>
+                    <a href="/modificar" class="boton modificar">Modificar perfil</a>
+                    <a href="/inicio" class="boton modificar">Volver</a> 
+                </div>
+                 
+            </div>
+            <!--Contenedor CLientes -->
+            <div id="form-clientes" class="form-clientes" th:if="${session.usuariosession != null and session.usuariosession.cliente != null}">
+                    
+                    <div class="body-container" th:each="cliente : ${clientes}" th:unless="${cliente.usuario.id == session.usuariosession.cliente.usuario.id or session.usuariosession.cliente.rol =='ADMIN'}">  <!-- NO FUNCIONA EL UNLESS-->
+                        <div class="review-container">
+                            
+                                <div class="review-info-container">
+                                    <img class="review-image" th:src="@{/imagen/foto/__${cliente.usuario.id}__}" alt="Foto proveedor">
+                                 
+                                    <div class="review-info">
+                                    <h4 th:text="${cliente.usuario.nombre}"></h4>
+                                    
+                                    <p th:text="'Barrio: ' +${cliente.barrio}"></p>
+                                    <p th:text="'Direccion: ' +${cliente.direccion}"></p>
+                                    <p th:text="'Correo electrónico: ' +${cliente.usuario.email}"></p>
+                                    <p th:text="'Teléfono: ' +${cliente.usuario.telefono}">></p>
+                                    
+                                    </div>
+                                    
+                                    
+                                   
+                                     <a th:href="@{/admin/eliminar_cliente/__${cliente.usuario.id}__}" class="boton-solicitar" style="background-color: red;" onclick="confirmarEliminacion(event)">Eliminar</a>
+                                     <a th:href="@{/modificar_usuario/__${cliente.usuario.id}__}" class="boton-solicitar" style="background-color: orange;" onclick="confirmarModificacion()">Modificar</a>
+                                </div>
+                              
+                        </div>
+                        <hr style="border: 1px solid orange; " />
+                    </div>
+               </div>
+            <!-- Contenedor Proveedores -->
+            <div id="form-servicios" class="container2" th:if="${session.usuariosession != null and session.usuariosession.cliente != null}">
+                
+                <h2>Vista Administrador - Filtro de Busqueda </h2>
+                <div class="button-container">
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Albañil" class="category-button">
+                        <img src="../img/botons/icon1.PNG" alt="Botón 1">
+                        <p>Albañilería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Cerrajero" class="category-button">
+                        <img src="../img/botons/icon2.PNG" alt="Botón 2">
+                        <p>Cerrajería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Carpintero" class="category-button">
+                        <img src="../img/botons/icon4.PNG" alt="Botón 4">
+                        <p>Carpintería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Plomero" class="category-button">
+                        <img src="../img/botons/icon6.PNG" alt="Botón 6">
+                        <p>Plomería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Gasista" class="category-button">
+                        <img src="../img/botons/icon7.PNG" alt="Botón 7">
+                        <p>Gasista</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Electricista" class="category-button">
+                        <img src="../img/botons/icon3.PNG" alt="Botón 3">
+                        <p>Electricista</p>
+                    </a>                   
+                </div>
+                
+                <div>
+                    <div class="body-container" th:each="proveedor : ${proveedores}">
+                        <div class="review-container">
+                            
+                                <div class="review-info-container">
+                                    <img class="review-image" th:src="@{/imagen/foto/__${proveedor.usuario.id}__}" alt="Foto proveedor">
+                                 
+                                    <div class="review-info">
+                                    <h4 th:text="${proveedor.usuario.nombre}+'  ('+${proveedor.tipo_servicio}+')'  "></h4>
+                                    
+                                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div> <!-- Cinco estrellas -->
+                                    <p th:text="'Correo electrónico: ' +${proveedor.usuario.email}"></p>
+                                    <p th:text="'Teléfono: ' +${proveedor.usuario.telefono}">></p>
+                                    
+                                    </div>
+                                   
+                                   <a th:href="@{/admin/eliminar_proveedor/__${proveedor.usuario.id}__}" class="boton-solicitar" style="background-color: red;" onclick="confirmarEliminacion(event)">Eliminar</a>
+                                    <a th:href="@{/modificar_usuario/__${proveedor.usuario.id}__}" class="boton-solicitar" style="background-color: orange;" onclick="confirmarModificacion()">Modificar</a>
+                                    
+                                </div>
+                            <p th:text="'Descripción: ' +${proveedor.descripcion}"></p>   
+                        </div>
+                        <hr style="border: 1px solid orange; " />
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+            
+            
+        </div>
+        
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script>
+        function mostrarRegistroPanel() {
+          document.getElementById("container1").style.display = "flex";
+          document.getElementById("form-servicios").style.display = "none";
+          document.getElementById("form-clientes").style.display = "none";
+          
+        }
+
+        function ocultarRegistroPanel() {
+          document.getElementById("container1").style.display = "none";
+          document.getElementById("form-servicios").style.display = "flex";
+        }
+        
+    </script>
+    
+    
+    
+    <script>
+        // Captura el evento de scroll
+        window.addEventListener("scroll", function () {
+            var nav = document.getElementById("myNav");
+
+            // Agrega la clase "scrolled" al nav cuando el scroll está por debajo de 30px
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+    <script>
+        function confirmarEliminacion(event) {
+            var confirmacion = confirm("¿Realmente quieres eliminar el perfil?");
+            if (confirmacion) {
+                window.location.href = event.target.getAttribute('href');
+            } else {
+                event.preventDefault();
+                alert("Operación cancelada.");
+            }
+        }
+                function confirmarModificacion() {
+            var confirmacion = confirm("¿Realmente quieres modificar los datos?");
+            if (confirmacion) {
+                document.getElementById('form_48915').submit();
+            } else {
+                event.preventDefault(); // Evita el envío del formulario
+                window.location.href = 'http://localhost:8080/inicio';
+            }
+        }
+    </script>
+
+</html>

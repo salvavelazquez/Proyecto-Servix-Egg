@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Solicitudes</title>
+    <style>
+        body {
+         background-image: url('/img/fondo2.jpg');
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         font-family: Arial, sans-serif;
+         margin: 0;
+            
+        box-sizing: border-box;
+        }
+        .cuerpo{
+            margin-top: 7em;
+            margin-left: 30px;
+            margin-right: 30px;
+            background-color: #fff;
+        }
+
+        /*****Navbar********/
+        nav {
+            background-color: #c83e03;
+            position: fixed;
+            top: 30px;
+            width: 95.5%;
+            display: flex;
+            height:4.3em;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        nav.scrolled {
+            left: 0px;
+            top: 0px;
+            width: 100%; 
+            height: 4.3em;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 25px;        
+            font-weight: bold;
+
+        }
+        nav a:hover {
+            color: white;
+            text-decoration: none;
+
+        }
+
+        ul {
+            list-style: none;
+            float: right;
+            margin: 0;
+            padding: 0px;
+            display: flex;
+
+        }
+
+        li {
+            padding: 0px;
+            margin-right: 0;
+            position: relative;
+
+        }
+
+
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+
+            top: 100%;
+            left: auto;
+            right: 0;
+            white-space: nowrap;
+
+        }
+
+        .dropdown-content a {
+            color: rgb(83, 78, 78);
+            padding: 12px 16px;
+            display: block;
+            text-align: center;
+            transition: transform 0.3s ease;
+
+        }
+
+        .dropdown-content a:hover {
+            color: #ef5311;
+            transform: scale(1.1);
+        }
+
+        li:hover .dropdown-content {
+            display: block;
+            color: white;
+        }
+
+        li:hover {
+            background-color: #ef5311;
+            color: white;
+        }
+
+        .logoenlace{
+            float: left;
+            padding: 0;
+            margin-left: 3.5em;
+        }
+        .logo {
+            width: auto;
+            height: 2.5em;
+        }
+
+        /**ladoizquierdo*/
+        .saludo{
+            color: #fff;
+            font-weight: bold;
+            padding: 14px 16px;
+            margin-bottom: 0;
+        }
+        .userenlace{    
+            margin-left: 0px;
+            padding: 0;
+            transition: transform 0.5s ease;
+         }
+         .userenlace:hover{
+             transform: scale(1.1);
+         }
+
+         .userperfil{
+             padding: 0;
+             background: #c83e03;
+             margin-bottom: 0;
+             
+         }
+
+
+         .user-image{
+            
+            width: 2.9em;
+            height: 2.6em;
+            border-radius: 50%;
+            margin-right: 7px;
+            
+         }
+
+
+
+         /*******Fin Navbar***********/
+        .div-transparente {
+                margin: 5em 2.2em;
+                background-color: rgba(0, 0, 0, 0.5); 
+                color: #fff; 
+                padding: 20px;
+                border-radius: 10px;
+
+        }
+        
+        /***Lista Proveedor***/
+        table {
+
+              border-collapse: collapse;
+              width: 100%;
+            }
+            th, td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+
+            }
+            button {
+              padding: 5px 10px;
+              cursor: pointer;
+            }
+            .botonvolver{
+                margin-top: 14px;
+            }
+            .botones-lista {
+                display: flex;
+                justify-content: space-between; 
+                align-items: center;
+               
+            }
+
+            .botones-lista button {
+                
+                margin: 5.5px;
+               
+            }
+            .botons-aprobar{
+                background: #4CAF50;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <div class="cuerpo">
+            <nav id="myNav">
+                <a href="/inicio" class="logoenlace"><img src="/img/Logo1.png" alt="Logo" class="logo"></a>
+                <ul>
+                    <li>
+                        <a href="/inicio" class="botonvolver" >VOLVER</a>
+                    </li>
+               
+                    <li>
+                        <a th:if="${session.usuariosession.imagen != null}" href="#" class="userperfil">
+                            <img class="user-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+    </div>
+    <div class="div-transparente">
+        <div th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}">
+            
+             <h1>Lista de Peticiones</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Servicio</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Tu Mensaje</th>
+                        <th>Estado</th>
+                        <!-- <th>proveedor id</th> -->
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="solicitud : ${solicitudes}" th:if="${solicitud.cliente.id == session.usuariosession.cliente.id}">
+                        <td th:text="${solicitud.proveedor.usuario.nombre}"></td>
+                        <td th:text="${solicitud.proveedor.tipo_servicio}"></td>
+                      
+                        <td th:text="${solicitud.proveedor.usuario.telefono}"></td>
+                        <td th:text="${solicitud.proveedor.usuario.email}"></td>
+                        <td th:text="${solicitud.fecha_solicitud}"></td>
+                        <td th:text="${solicitud.mensaje}"></td>
+                        <td th:text="${solicitud.estado}"></td>
+                        <!-- <td th:text="${solicitud.proveedor.id}"></td> -->
+                        <td>
+                            <div class="botones-lista">
+                                <!-- Botones en cada fila -->
+                                <button  class="botons-aprobar" name="estado" th:value="'aprobado'">Aprobar</button>
+                                <button class="botons-rechazar" >Rechazar</button>
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+           </table>  
+        </div>
+        <div th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+            <h1>Lista de Solicitudes</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Barrio</th>
+                        <th>Direccion</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Mensaje</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Estado</th>
+                        <!-- <th>proveedor id</th> -->
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="solicitud : ${solicitudes}" th:if="${solicitud.proveedor.id == session.usuariosession.proveedor.id}">
+                        <td th:text="${solicitud.cliente.usuario.nombre}"></td>
+                        <td th:text="${solicitud.cliente.barrio}"></td>
+                        <td th:text="${solicitud.cliente.direccion}"></td>
+                        <td th:text="${solicitud.cliente.usuario.telefono}"></td>
+                        <td th:text="${solicitud.cliente.usuario.email}"></td>
+                        <td th:text="${solicitud.mensaje}"></td>
+
+                        <td th:text="${solicitud.fecha_solicitud}"></td>
+                        <td th:text="${solicitud.estado}"></td>
+                        <!-- <td th:text="${solicitud.proveedor.id}"></td> -->
+                        <td th:action="@{/contrato/modificar_solicitud/__${solicitud.id}__}"> 
+                            <div class="botones-lista">
+                                <!-- Botones en cada fila -->
+                                
+                                <button  class="botons-aprobar" name="estado" th:value="'aprobado'">Aprobar</button>
+                                <button class="botons-rechazar" onclick="eliminarCliente()">Rechazar</button>
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+           </table>  
+        </div>
+
+    </div>
+    
+</body>
+
+</html> 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Registro Cliente</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/usuario_formulario.css">
+
+    </head>
+
+    <body id="main_body">
+        <div class="container">
+
+            <form id="form_48915" class="appnitro" enctype="multipart/form-data" method="POST" action="/cliente/registro">
+                <div class="form_description">
+                    <h2>REGISTRAR USUARIO</h2>
+
+                    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                        <div class="card-body">
+                            <h5 class="card-title">ERROR 👎</h5>
+                            <p class="card-text" th:text="${error}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                        <div class="card-body">
+                            <h5 class="card-title">EXITO!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <ul>
+
+                    <li id="li_1">
+                        <span>
+                            <input id="element_1" name="nombre" class="element text" maxlength="255" size="8" value="" placeholder="Nombre" required />
+                        </span>
+                    </li>
+                    <li id="li_2">
+                        <div>
+                            <input id="element_2" name="password" class="element text large" value="" type="password" placeholder="Contraseña" required/>
+                        </div>
+                        <div>
+                            <input id="element_2" name="password2" class="element text large" value="" type="password" placeholder="Repetir Contraseña" required/>
+                        </div>
+                    </li>
+                    <li id="li_3">
+                        <div>
+                            <input id="element_3" name="direccion" class="element text large" value="" type="text" placeholder="Domicilio" required/>
+                        </div>
+                    </li>
+
+                    <select id="opciones" name="barrio">
+                        <option style="color: gray" value="opcion1">Barrio</option>
+                        <option value="Barrio Norte">Barrio Norte</option>
+                        <option value="Barrio Este">Barrio Este</option>
+                        <option value="Barrio Sur">Barrio Sur</option>
+                    </select>
+
+                    <li id="li_4">
+                        <div>
+                            <input id="element_4" name="email" class="element text large" value="" type="text" placeholder="Correo: cliente@gmail.com" required/>
+                        </div>
+                    </li>
+                    <li id="li_5">	
+                        <div class="phone-input">
+                            <input type="text" id="caracteristica" name="telefono" placeholder="Telefono sin el 0, 15 o -" required />
+                        </div>
+                    </li>
+                    <li id="li_6">
+                        <label class="description" for="element_6">Cargar Imagen </label>
+                        <div>
+                            <input id="element_6" name="archivo" class="element file" type="file"/>
+                        </div>
+                    </li>
+
+                    <li class="buttons">
+                        <input type="hidden" name="form_id" value="48915" />
+                        <input id="saveForm" class="button_text" type="submit" name="Submit" value="Aceptar" />
+                    </li>
+                </ul>
+            </form>
+            <a href="/">
+                <img class="logo" src="../img/Logo.PNG" alt="Logo">
+            </a>
+
+        </div>
+
+
+
+    </body>
+
+</html>

@@ -1,0 +1,175 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c83e03;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.container {
+    display: flex;
+    align-items: center;
+}
+.containeradmin{
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+    flex-wrap: wrap; 
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+}
+
+.logo {
+    float: right;
+    width: 100px; /* Adjust the width as needed */
+    margin-right: 250px; /* Adjust the margin as needed */
+	border-radius: 15px; 
+}
+
+header {
+    text-align: center;
+}
+
+.logo {
+    width: 350px;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 20px auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.telf{
+	display: flex;
+	align-items: center;
+}
+
+input {
+	width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+
+button {
+    background-color: #c83e03;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.04);
+}
+
+.extra-info {
+    display: flex;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.extra-info a {
+    margin-left: 3.2em;
+    text-decoration: none;
+    color: #fff;
+}
+
+form h1 {
+    text-align: center;
+    color: #333;
+}
+
+#form_container {
+    margin: 20px auto;
+    width: 400px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form_description h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+label.description {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.element {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button_text {
+    background-color: #c83e03;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.button_text:hover {
+    transform: scale(1.04);
+}
+
+.phone-input {
+	display: flex;
+	align-items: center;
+}
+
+#caracteristica {
+	width: 100%; 
+	margin-right: 10px;
+}
+
+#numero {
+	width: 70%; 
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+select option[value="opcion1"] {
+    color: gray !important;
+}
+
+.select-options li:first-child {
+    color: gray;
+}
