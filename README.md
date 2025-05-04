@@ -1,3 +1,21 @@
-Proyecto Final para el curso de Full Stack Developer con Spring de la Empresa Egg, consiste en una pagina web de servicios donde los clientes contactan a un profesional como puede ser un albañil, electricista, entre otros para trabajos varios. El User ADMIN Se lo crea en la base de datos (mysql).
+# SERVIX - Plataforma de Servicios Profesionales  
+
+Proyecto Final para el curso de Full Stack Developer con Spring (Empresa Egg).  
+
+## Descripción  
+Plataforma web que conecta clientes con profesionales (albañiles, electricistas, etc.) para trabajos varios.  
 
 ![Captura del proyecto](https://github.com/salvavelazquez/Proyecto-Servix-Egg/blob/main/home%20servix.PNG)
+
+## Tecnologías  
+- Backend: Spring Boot, MySQL  
+- Frontend: React
+
+## Roles  
+- **Admin**: Creado directamente en la base de datos. Gestiona usuarios y servicios.  
+- **Profesionales**: Ofrecen servicios.  
+- **Clientes**: Contratan servicios.  
+
+## Colaboradores  
+- Augusto Velazquez 
+- Federico Welsh  
